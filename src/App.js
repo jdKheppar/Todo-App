@@ -6,6 +6,7 @@ import { AddTodo } from "./MyComponents/AddTodo";
 import { About } from "./MyComponents/About";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import axios from "axios";
 
 function App() {
   let initTodo;
@@ -14,7 +15,20 @@ function App() {
   } else {
     initTodo = JSON.parse(localStorage.getItem("todos"));
   }
-
+  const hitBackend=async ()=>{
+    let data={
+      email:"asd@asd.asd",
+      password: "asd@asd.asd"
+    }
+    const params = new URLSearchParams(data).toString();
+    const fullUrl = `https://reseller.whitexdigital.com/api/login?${params}`;
+    // Configure Axios to follow redirects
+   
+    // Log the full URL
+    console.log(fullUrl);
+    let responseA = await axios.post(fullUrl);
+    console.log(responseA);
+  }
   const onDelete = (todo) => {
     console.log("I am ondelete of todo", todo);
     // Deleting this way in react does not work
@@ -54,6 +68,7 @@ function App() {
 
   return (
     <>
+    <p onClick={hitBackend}>Hit Backend and Check Inspect</p>
       <Router>
         <Header title="My Todos List" searchBar={false} />
         <Routes>
